@@ -3,6 +3,7 @@ title: "dplyr"
 author: "Dayana Moncada"
 date: "8/30/2017"
 output: html_document
+---
 
 <img src= "LinkedInpic.jpg"/>
 

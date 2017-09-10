@@ -63,4 +63,43 @@ Batting%>%
   arrange(SO)
 ```
 
-End.
+```{r}
+Batting%>%
+  select(playerID,yearID,teamID,HR)%>%
+  filter(teamID=="NYA" & yearID==1927)
+```
+
+```{r}
+Batting%>%
+  group_by(playerID== 'ruthba01')%>%
+  summarize(career_HR=sum(HR))
+```
+
+
+
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(career_HR=sum(HR))%>%
+  filter(career_HR>=600)%>%
+  arrange(desc(career_HR))
+```
+
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(HRAvg=mean(HR))%>%
+  filter(HRAvg>30)%>%
+  arrange(desc(HRAvg))
+```
+
+
+```{r}
+Batting%>%
+  filter(yearID>=1970)%>%
+  group_by(playerID)%>%
+  summarize(maxHR=max(HR))%>%
+  filter(maxHR>50)%>%
+  select(playerID)
+```
+

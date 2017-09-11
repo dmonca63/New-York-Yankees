@@ -127,6 +127,9 @@ $(document).ready(function () {
 <p>International Student from Honduras. First year graduate student at Mercyhurst University in Data Science. Data Analytics | Political Science &amp; Public Policy Advocacy | Fashion Data Analysis</p>
 <div id="filtering-columns-and-rows" class="section level2">
 <h2>Filtering Columns and Rows</h2>
+</div>
+<div id="preface" class="section level2">
+<h2>Preface</h2>
 <p>When using dplyr, you can filter columns and rows by using select and filter. Let’s look at an example using the Lahman baseball database. We first have to load the Lahman and dplyr packages.</p>
 <pre class="r"><code>library(Lahman)
 library(dplyr)</code></pre>
@@ -211,6 +214,9 @@ library(dplyr)</code></pre>
 ## 7 schmimi01   1977    PHI 38
 ## 8 luzingr01   1978    PHI 35
 ## 9 schmimi01   1979    PHI 45</code></pre>
+</div>
+<div id="arrange" class="section level2">
+<h2>Arrange</h2>
 <p>Furthermore, the chart below shows the players hitting more than 50 homeruns arranged from the ones with the most homeruns at the top. We ran this code:</p>
 <pre class="r"><code>Batting%&gt;%
   select(playerID,yearID,teamID,HR)%&gt;%
@@ -324,35 +330,38 @@ library(dplyr)</code></pre>
 ## 63 holmeto01   1945    BSN  9 636
 ## 64 boudrlo01   1948    CLE  9 560
 ## 65 mitchda01   1952    CLE  9 511</code></pre>
-<pre class="r"><code>Batting%&gt;%
-  select(playerID,yearID,teamID,HR)%&gt;%
-  filter(teamID==&quot;NYA&quot; &amp; yearID==1927)</code></pre>
-<pre><code>##     playerID yearID teamID HR
-## 1  beallwa01   1927    NYA  0
-## 2  bengobe01   1927    NYA  0
-## 3  collipa01   1927    NYA  7
-## 4  combsea01   1927    NYA  6
-## 5  duganjo01   1927    NYA  2
-## 6  durstce01   1927    NYA  0
-## 7  gazelmi01   1927    NYA  0
-## 8  gehrilo01   1927    NYA 47
-## 9  giardjo01   1927    NYA  0
-## 10 grabojo01   1927    NYA  0
-## 11  hoytwa01   1927    NYA  0
-## 12 koenima01   1927    NYA  3
-## 13 lazzeto01   1927    NYA 18
-## 14 meusebo01   1927    NYA  8
-## 15 moorewi01   1927    NYA  1
-## 16 morehra01   1927    NYA  1
-## 17 paschbe01   1927    NYA  2
-## 18 pennohe01   1927    NYA  0
-## 19 pipgrge01   1927    NYA  1
-## 20 ruethdu01   1927    NYA  1
-## 21  ruthba01   1927    NYA 60
-## 22 shawkbo01   1927    NYA  0
-## 23 shockur01   1927    NYA  0
-## 24 thomamy01   1927    NYA  0
-## 25  weraju01   1927    NYA  1</code></pre>
+</div>
+<div id="group_by-and-summarize" class="section level2">
+<h2>Group_by and summarize</h2>
+<p>You can use group_by() to push all instances of a string or int into one entry. Then you can use summarise() to sum(), mean(), or any other funciton to the varibles. The examples belowe will show how group_by and summarise can work together to create good querys.</p>
+<p>Get Babe Ruths home runs.</p>
+<pre class="r"><code>Batting %&gt;%
+  select(playerID, HR) %&gt;%
+  filter(playerID == &quot;ruthba01&quot;)</code></pre>
+<pre><code>##    playerID HR
+## 1  ruthba01  0
+## 2  ruthba01  4
+## 3  ruthba01  3
+## 4  ruthba01  2
+## 5  ruthba01 11
+## 6  ruthba01 29
+## 7  ruthba01 54
+## 8  ruthba01 59
+## 9  ruthba01 35
+## 10 ruthba01 41
+## 11 ruthba01 46
+## 12 ruthba01 25
+## 13 ruthba01 47
+## 14 ruthba01 60
+## 15 ruthba01 54
+## 16 ruthba01 46
+## 17 ruthba01 49
+## 18 ruthba01 46
+## 19 ruthba01 41
+## 20 ruthba01 34
+## 21 ruthba01 22
+## 22 ruthba01  6</code></pre>
+<p>Get Babe Ruth’s total home runs.</p>
 <pre class="r"><code>Batting%&gt;%
   group_by(playerID== 'ruthba01')%&gt;%
   summarize(career_HR=sum(HR))</code></pre>
@@ -361,6 +370,7 @@ library(dplyr)</code></pre>
 ##                      &lt;lgl&gt;     &lt;int&gt;
 ## 1                    FALSE    288569
 ## 2                     TRUE       714</code></pre>
+<p>Get players total home runs, 600 or more, in order of greatest to least.</p>
 <pre class="r"><code>Batting%&gt;%
   group_by(playerID)%&gt;%
   summarize(career_HR=sum(HR))%&gt;%
@@ -377,6 +387,7 @@ library(dplyr)</code></pre>
 ## 6 griffke02       630
 ## 7 thomeji01       612
 ## 8  sosasa01       609</code></pre>
+<p>Get players average home runs, with an average 30 or more, and order it from greatest to least.</p>
 <pre class="r"><code>Batting%&gt;%
   group_by(playerID)%&gt;%
   summarize(HRAvg=mean(HR))%&gt;%
@@ -398,6 +409,7 @@ library(dplyr)</code></pre>
 ## 11 rodrial01 31.63636
 ## 12 schmimi01 30.44444
 ## 13 abreujo02 30.33333</code></pre>
+<p>Get players, listed only once, that have made more than 50 home runs since 1970.</p>
 <pre class="r"><code>Batting%&gt;%
   filter(yearID&gt;=1970)%&gt;%
   group_by(playerID)%&gt;%
@@ -421,9 +433,6 @@ library(dplyr)</code></pre>
 ## 12 rodrial01
 ## 13  sosasa01
 ## 14 thomeji01</code></pre>
-</div>
-<div id="section" class="section level1">
-<h1>———-</h1>
 </div>
 
 

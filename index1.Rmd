@@ -11,7 +11,6 @@ International Student from Honduras. First year graduate student at Mercyhurst U
 Data Analytics | Political Science & Public Policy Advocacy | Fashion Data Analysis
 
 
-
 ## Filtering Columns and Rows
 
 
